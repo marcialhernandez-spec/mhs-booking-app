@@ -1,13 +1,8 @@
-// MHS Services booking backend starter
-// Add package.json in Replit with: express, pg, bcryptjs, jsonwebtoken, dotenv, twilio, cors
+// MHS Services booking backend
 // Required env vars:
-// DATABASE_URL=postgres://...
-// JWT_SECRET=change_me
-// ADMIN_EMAIL=admin@example.com
-// ADMIN_PASSWORD_HASH=<bcrypt hash>
-// TWILIO_ACCOUNT_SID=...
-// TWILIO_AUTH_TOKEN=...
-// TWILIO_FROM=+1...
+// DATABASE_URL, JWT_SECRET, ADMIN_EMAIL, ADMIN_PASSWORD_HASH
+// TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, TWILIO_FROM (optional)
+// EMAIL_USER, EMAIL_PASS, NOTIFY_EMAIL
 
 const express = require('express');
 const path = require('path');
@@ -15,6 +10,7 @@ const { Pool } = require('pg');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const twilio = require('twilio');
+const nodemailer = require('nodemailer');
 
 const app = express();
 app.use(express.json());
@@ -29,6 +25,16 @@ const twilioClient = process.env.TWILIO_ACCOUNT_SID && process.env.TWILIO_AUTH_T
   ? twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN)
   : null;
 
+const emailTransporter = process.env.EMAIL_USER && process.env.EMAIL_PASS
+  ? nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
+      }
+    })
+  : null;
+
 const DEFAULT_SLOTS = ['08:00','10:00','12:00','14:00','16:00','18:00'];
 
 function signAdminToken(email) {
@@ -39,6 +45,53 @@ async function sendBookingSms(to, service, date, time) {
   if (!twilioClient || !process.env.TWILIO_FROM) return;
   const body = `MHS Services: Tu cita para ${service} está confirmada el ${date} a las ${time}. Gracias por reservar.`;
   await twilioClient.messages.create({ from: process.env.TWILIO_FROM, to, body });
+}
+
+async function sendBookingEmail({ customer_name, customer_phone, service_type, appointment_date, appointment_time, customer_address, notes }) {
+  if (!emailTransporter || !process.env.NOTIFY_EMAIL) return;
+
+  const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(customer_address)}`;
+  const notesLine = notes ? `Notes: ${notes}` : 'Notes: —';
+
+  const text = [
+    'New appointment booked on MHS Services.',
+    '',
+    `Customer Name:  ${customer_name}`,
+    `Phone:          ${customer_phone}`,
+    `Service:        ${service_type}`,
+    `Date:           ${appointment_date}`,
+    `Time:           ${appointment_time}`,
+    `Address:        ${customer_address}`,
+    notesLine,
+    '',
+    `Google Maps: ${mapsUrl}`
+  ].join('\n');
+
+  const html = `
+    <h2 style="color:#0d6e6e;">New Appointment – MHS Services</h2>
+    <table cellpadding="6" style="border-collapse:collapse;font-family:sans-serif;font-size:14px;">
+      <tr><td><strong>Customer Name</strong></td><td>${customer_name}</td></tr>
+      <tr><td><strong>Phone</strong></td><td>${customer_phone}</td></tr>
+      <tr><td><strong>Service</strong></td><td>${service_type}</td></tr>
+      <tr><td><strong>Date</strong></td><td>${appointment_date}</td></tr>
+      <tr><td><strong>Time</strong></td><td>${appointment_time}</td></tr>
+      <tr><td><strong>Address</strong></td><td>${customer_address}</td></tr>
+      <tr><td><strong>Notes</strong></td><td>${notes || '—'}</td></tr>
+    </table>
+    <p style="margin-top:16px;">
+      <a href="${mapsUrl}" style="background:#0d6e6e;color:#fff;padding:8px 16px;text-decoration:none;border-radius:4px;">
+        Open in Google Maps
+      </a>
+    </p>
+  `;
+
+  await emailTransporter.sendMail({
+    from: `"MHS Services" <${process.env.EMAIL_USER}>`,
+    to: process.env.NOTIFY_EMAIL,
+    subject: 'New Appointment - MHS Services',
+    text,
+    html
+  });
 }
 
 app.post('/api/admin/login', async (req, res) => {
@@ -125,9 +178,21 @@ app.post('/api/bookings', async (req, res) => {
       [customer_name, customer_phone, service_type, appointment_date, appointment_time, customer_address, notes]
     );
 
+    const appt = result.rows[0];
+
     await sendBookingSms(customer_phone, service_type, appointment_date, appointment_time);
 
-    res.status(201).json({ message: 'Cita confirmada y guardada correctamente.', appointment: result.rows[0] });
+    sendBookingEmail({
+      customer_name,
+      customer_phone,
+      service_type,
+      appointment_date,
+      appointment_time,
+      customer_address,
+      notes
+    }).catch(err => console.error('Email notification failed:', err.message));
+
+    res.status(201).json({ message: 'Cita confirmada y guardada correctamente.', appointment: appt });
   } catch (err) {
     res.status(500).json({ message: 'No se pudo crear la cita.', error: err.message });
   }

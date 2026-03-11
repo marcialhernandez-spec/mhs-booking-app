@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MHS Services | Reservas</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <nav class="container-fluid">
+    <ul><li><strong>MHS Services LLC</strong></li></ul>
+    <ul>
+      <li><a href="#booking">Reservar</a></li>
+      <li><a href="#availability">Disponibilidad</a></li>
+      <li><a href="/admin.html">Admin</a></li>
+      <li><a href="/tech.html" role="button">Técnicos</a></li>
+    </ul>
+  </nav>
+
+  <main class="container">
+    <div class="grid">
+      <section>
+        <hgroup>
+          <h2>Reserva tu servicio de refrigeración</h2>
+          <h3>Horarios en tiempo real y confirmación por SMS</h3>
+        </hgroup>
+        <p>Selecciona el servicio, la fecha y un horario disponible. Al confirmar, la cita se guarda en base de datos y el cliente recibe un mensaje de texto.</p>
+
+        <article id="booking">
+          <h3>Nueva cita</h3>
+          <form id="bookingForm" class="grid">
+            <input type="text" id="customer_name" placeholder="Nombre completo" aria-label="Nombre completo" required>
+            <input type="tel" id="customer_phone" placeholder="Teléfono" aria-label="Teléfono" required>
+            <select id="service_type" aria-label="Servicio" required>
+              <option value="">Selecciona un servicio</option>
+              <option value="Instalación de aires inverter">Instalación de aires inverter</option>
+              <option value="Mantenimiento de aires inverter">Mantenimiento de aires inverter</option>
+              <option value="Reparación de aires inverter">Reparación de aires inverter</option>
+              <option value="Cotización para nuevos clientes">Cotización para nuevos clientes</option>
+            </select>
+            <input type="date" id="appointment_date" aria-label="Fecha" required>
+            <input type="text" id="customer_address" placeholder="Dirección del servicio" aria-label="Dirección" required>
+            <select id="appointment_time" aria-label="Hora disponible" required>
+              <option value="">Selecciona una hora</option>
+            </select>
+            <input type="text" id="notes" placeholder="Notas del problema o instalación" aria-label="Notas">
+            <button type="submit">Reservar cita</button>
+          </form>
+          <small id="bookingMessage"></small>
+        </article>
+
+        <article id="availability">
+          <h3>Disponibilidad del día</h3>
+          <p>Los horarios se cargan desde la API según la fecha seleccionada.</p>
+          <div id="slots" class="slots"></div>
+        </article>
+      </section>
+    </div>
+  </main>
+
+  <section aria-label="Subscribe example">
+    <div class="container">
+      <article>
+        <hgroup>
+          <h2>Recordatorios</h2>
+          <h3>El cliente recibe confirmación por SMS</h3>
+        </hgroup>
+        <form class="grid">
+          <input type="text" id="firstname" name="firstname" placeholder="Tu nombre" aria-label="Nombre" required>
+          <input type="email" id="email" name="email" placeholder="Tu correo" aria-label="Correo" required>
+          <button type="submit" onclick="event.preventDefault()">Suscribirme</button>
+        </form>
+      </article>
+    </div>
+  </section>
+
+  <footer class="container">
+    <small><a href="/admin.html">Administrador</a> • <a href="/tech.html">Vista de técnicos</a></small>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

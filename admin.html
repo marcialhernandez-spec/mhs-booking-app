@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MHS Services | Admin</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <nav class="container-fluid">
+    <ul><li><strong>Panel Admin</strong></li></ul>
+    <ul>
+      <li><a href="/index.html">Reservas</a></li>
+      <li><a href="/tech.html">Técnicos</a></li>
+    </ul>
+  </nav>
+
+  <main class="container">
+    <div class="grid">
+      <section>
+        <article>
+          <hgroup>
+            <h2>Login de administrador</h2>
+            <h3>Acceso privado</h3>
+          </hgroup>
+          <form id="loginForm" class="grid">
+            <input type="email" id="email" placeholder="Correo del admin" aria-label="Correo del admin" required>
+            <input type="password" id="password" placeholder="Contraseña" aria-label="Contraseña" required>
+            <button type="submit">Entrar</button>
+          </form>
+          <small id="loginMessage"></small>
+        </article>
+
+        <article>
+          <h3>Citas del día</h3>
+          <div id="appointments"></div>
+        </article>
+
+        <article>
+          <h3>Bloquear horario</h3>
+          <form id="blockForm" class="grid">
+            <input type="date" id="block_date" aria-label="Fecha a bloquear" required>
+            <input type="time" id="block_time" aria-label="Hora a bloquear" required>
+            <button type="submit">Bloquear</button>
+          </form>
+        </article>
+      </section>
+    </div>
+  </main>
+
+  <section aria-label="Subscribe example"><div class="container"><article><hgroup><h2>Admin</h2><h3>Gestión de horarios y citas</h3></hgroup><form class="grid"><input type="text" id="firstname" name="firstname" placeholder="Nombre" aria-label="Nombre" required /><input type="email" id="email2" name="email2" placeholder="Correo" aria-label="Correo" required /><button type="submit" onclick="event.preventDefault()">Guardar</button></form></article></div></section>
+  <footer class="container"><small><a href="/index.html">Inicio</a> • <a href="/tech.html">Técnicos</a></small></footer>
+  <script src="admin.js"></script>
+</body>
+</html>

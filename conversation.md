@@ -1,0 +1,1 @@
+The user wants a real booking system for MHS Services with Next.js-style frontend experience, Node.js backend, PostgreSQL database, Twilio SMS, automatic availability, admin login, and an internal Uber-like technician view for routes, daily jobs, and customers. This export provides a practical starter scaffold focused on those requirements.

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MHS Services | Técnicos</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <nav class="container-fluid">
+    <ul><li><strong>Ruta del técnico</strong></li></ul>
+    <ul>
+      <li><a href="/index.html">Reservas</a></li>
+      <li><a href="/admin.html">Admin</a></li>
+    </ul>
+  </nav>
+
+  <main class="container">
+    <div class="grid">
+      <section>
+        <hgroup>
+          <h2>Citas del técnico</h2>
+          <h3>Vista interna tipo Uber para el equipo</h3>
+        </hgroup>
+        <p>Aquí se listan las visitas asignadas, dirección, cliente, servicio, hora y estado.</p>
+        <article>
+          <div id="techJobs"></div>
+        </article>
+      </section>
+    </div>
+  </main>
+
+  <section aria-label="Subscribe example"><div class="container"><article><hgroup><h2>Equipo técnico</h2><h3>Seguimiento diario de rutas</h3></hgroup><form class="grid"><input type="text" id="firstname" name="firstname" placeholder="Nombre" aria-label="Nombre" required /><input type="email" id="email" name="email" placeholder="Correo" aria-label="Correo" required /><button type="submit" onclick="event.preventDefault()">Enviar</button></form></article></div></section>
+  <footer class="container"><small><a href="/index.html">Reservas</a> • <a href="/admin.html">Administrador</a></small></footer>
+  <script src="tech.js"></script>
+</body>
+</html>

@@ -200,10 +200,46 @@ app.post('/api/bookings', async (req, res) => {
 
 app.get('/api/admin/appointments', async (_req, res) => {
   try {
-    const result = await pool.query(`select * from appointments order by appointment_date asc, appointment_time asc limit 50`);
+    const result = await pool.query(
+      `select * from appointments order by appointment_date asc, appointment_time asc limit 100`
+    );
     res.json({ appointments: result.rows });
   } catch (err) {
     res.status(500).json({ message: 'No se pudieron cargar las citas.', error: err.message });
+  }
+});
+
+app.get('/api/admin/appointments/today', async (_req, res) => {
+  try {
+    const result = await pool.query(
+      `select * from appointments
+       where appointment_date = current_date
+       order by appointment_time asc`
+    );
+    res.json({ appointments: result.rows });
+  } catch (err) {
+    res.status(500).json({ message: 'No se pudieron cargar las citas de hoy.', error: err.message });
+  }
+});
+
+app.patch('/api/admin/appointments/:id/status', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { status } = req.body;
+    const allowed = ['pending', 'confirmed', 'completed', 'cancelled'];
+    if (!allowed.includes(status)) {
+      return res.status(400).json({ message: 'Estado inválido.' });
+    }
+    const result = await pool.query(
+      `update appointments set status = $1 where id = $2 returning *`,
+      [status, id]
+    );
+    if (!result.rows.length) {
+      return res.status(404).json({ message: 'Cita no encontrada.' });
+    }
+    res.json({ appointment: result.rows[0] });
+  } catch (err) {
+    res.status(500).json({ message: 'No se pudo actualizar el estado.', error: err.message });
   }
 });
 
@@ -217,19 +253,6 @@ app.post('/api/admin/block-slot', async (req, res) => {
   }
 });
 
-app.get('/api/tech/jobs', async (_req, res) => {
-  try {
-    const result = await pool.query(
-      `select a.*, t.name as technician_name
-       from appointments a
-       left join technicians t on a.technician_id = t.id
-       order by a.appointment_date asc, a.appointment_time asc`
-    );
-    res.json({ jobs: result.rows });
-  } catch (err) {
-    res.status(500).json({ message: 'No se pudieron cargar los trabajos.', error: err.message });
-  }
-});
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

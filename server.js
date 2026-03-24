@@ -104,8 +104,10 @@ app.post('/api/admin/login', async (req, res) => {
       return res.status(500).json({ message: 'Faltan variables de admin en el servidor.' });
     }
 
-    const okEmail = email === adminEmail;
-    const okPass = await bcrypt.compare(password, passwordHash);
+    console.log('LOGIN email recibido:', email);
+console.log('LOGIN admin email:', adminEmail);
+console.log('LOGIN okEmail/okPass:', okEmail, okPass);
+    
 
     if (!okEmail || !okPass) {
       return res.status(401).json({ message: 'Credenciales inválidas.' });

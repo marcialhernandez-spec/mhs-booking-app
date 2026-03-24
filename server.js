@@ -20,7 +20,40 @@ const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: process.env.DATABASE_URL ? { rejectUnauthorized: false } : false
 });
+async function initDb() {
+  try {
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS appointments (
+        id SERIAL PRIMARY KEY,
+        customer_name TEXT NOT NULL,
+        customer_phone TEXT NOT NULL,
+        service_type TEXT NOT NULL,
+        appointment_date DATE NOT NULL,
+        appointment_time VARCHAR(5) NOT NULL,
+        customer_address TEXT,
+        notes TEXT,
+        status VARCHAR(20) DEFAULT 'confirmed',
+        created_at TIMESTAMP DEFAULT NOW()
+      );
+    `);
 
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS blocked_slots (
+        id SERIAL PRIMARY KEY,
+        block_date DATE NOT NULL,
+        block_time VARCHAR(5) NOT NULL,
+        created_at TIMESTAMP DEFAULT NOW(),
+        UNIQUE (block_date, block_time)
+      );
+    `);
+
+    console.log('DB lista');
+  } catch (err) {
+    console.error('Error creando tablas:', err.message);
+  }
+}
+
+initDb();
 const twilioClient = process.env.TWILIO_ACCOUNT_SID && process.env.TWILIO_AUTH_TOKEN
   ? twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN)
   : null;

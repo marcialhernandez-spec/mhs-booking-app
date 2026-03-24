@@ -103,7 +103,14 @@ app.post('/api/admin/login', async (req, res) => {
     if (!adminEmail || !passwordHash) {
       return res.status(500).json({ message: 'Faltan variables de admin en el servidor.' });
     }
+const okEmail =
+  String(email || '').trim().toLowerCase() ===
+  String(adminEmail || '').trim().toLowerCase();
 
+const okPass = await bcrypt.compare(
+  String(password || '').trim(),
+  String(passwordHash || '').trim()
+);
     console.log('LOGIN email recibido:', email);
 console.log('LOGIN admin email:', adminEmail);
 console.log('LOGIN okEmail/okPass:', okEmail, okPass);

@@ -75,7 +75,7 @@ async function sendBookingSms(to, service, date, time) {
 }
 
 async function sendBookingEmail({ customer_name, customer_phone, service_type, appointment_date, appointment_time, customer_address, notes }) {
-  if (!emailTransporter || !process.env.NOTIFY_EMAIL) return;
+  if (!resend || !process.env.NOTIFY_EMAIL) return;
 
   const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(customer_address)}`;
   const notesLine = notes ? `Notes: ${notes}` : 'Notes: —';

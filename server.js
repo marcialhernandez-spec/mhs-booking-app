@@ -112,13 +112,13 @@ async function sendBookingEmail({ customer_name, customer_phone, service_type, a
     </p>
   `;
 
-  await emailTransporter.sendMail({
-    from: `"MHS Services" <${process.env.EMAIL_USER}>`,
-    to: process.env.NOTIFY_EMAIL,
-    subject: 'New Appointment - MHS Services',
-    text,
-    html
-  });
+  await resend.emails.send({
+  from: 'MHS Services <onboarding@resend.dev>',
+  to: process.env.NOTIFY_EMAIL,
+  subject: 'New Appointment - MHS Services',
+  text,
+  html
+});
 }
 
 app.post('/api/admin/login', async (req, res) => {

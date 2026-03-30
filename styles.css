@@ -86,3 +86,20 @@ article h3 {
 article p {
   color: #6f7d8a;
 }
+/* ===== BOTON PRINCIPAL ===== */
+
+button[type="submit"] {
+  background: linear-gradient(90deg, #27398b, #3a7ec1);
+  border: none;
+  color: white;
+  font-weight: 700;
+  border-radius: 10px;
+  padding: 14px;
+  font-size: 1.05rem;
+  transition: all .2s ease;
+}
+
+button[type="submit"]:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 18px rgba(39,57,139,.25);
+}

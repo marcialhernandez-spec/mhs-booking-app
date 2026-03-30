@@ -46,10 +46,12 @@ body{background:linear-gradient(180deg,#f8fbfe 0%,#eef6fb 100%)}main.container{p
 }
 
 .logo {
-  max-width: 260px;
-  height: auto;
-  margin-bottom: 10px;
+max-width: 220px;
+height: auto;
+display: block;
+margin: 0 auto 6px;
 }
+
 
 /* TITULO */
 

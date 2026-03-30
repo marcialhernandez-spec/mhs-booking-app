@@ -61,4 +61,28 @@ margin: 0 auto 6px;
   font-weight: 700;
   margin-top: 5px;
 }
+/* ===== TARJETAS PRINCIPALES ===== */
 
+article {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 1.5rem;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+  border: 1px solid rgba(39,57,139,.08);
+}
+
+/* Espacio entre tarjetas */
+.grid article {
+  margin-bottom: 20px;
+}
+
+/* Títulos dentro de tarjetas */
+article h3 {
+  color: #27398b;
+  font-weight: 700;
+}
+
+/* Texto secundario */
+article p {
+  color: #6f7d8a;
+}

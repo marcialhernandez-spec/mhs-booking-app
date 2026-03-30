@@ -127,3 +127,27 @@ select:focus {
 #bookingForm select {
   margin-bottom: 10px;
 }
+/* ===== NAVBAR PROFESIONAL ===== */
+
+nav {
+  background: linear-gradient(90deg, #27398b, #3a7ec1);
+  padding: 10px 20px;
+  border-bottom: none;
+}
+
+/* Texto del logo en navbar */
+nav strong {
+  color: white;
+  font-size: 1.1rem;
+}
+
+/* Links del menú */
+nav a {
+  color: white !important;
+  font-weight: 500;
+}
+
+/* Hover en links */
+nav a:hover {
+  text-decoration: underline;
+}

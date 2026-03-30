@@ -151,3 +151,17 @@ nav a {
 nav a:hover {
   text-decoration: underline;
 }
+/* ===== FONDO GENERAL ===== */
+
+body {
+  background: linear-gradient(
+    180deg,
+    #f4f7fb 0%,
+    #eaf0f8 100%
+  );
+}
+
+/* Contenedor principal */
+main.container {
+  margin-top: 20px;
+}

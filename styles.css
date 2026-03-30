@@ -41,8 +41,9 @@ body{background:linear-gradient(180deg,#f8fbfe 0%,#eef6fb 100%)}main.container{p
 /* ===== HEADER CON LOGO ===== */
 
 .site-header {
-  text-align: center;
-  padding: 20px 10px;
+text-align: center;
+padding: 8px 10px 0;
+margin-bottom: 10px;
 }
 
 .logo {

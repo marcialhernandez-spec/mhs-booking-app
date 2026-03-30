@@ -38,3 +38,24 @@ body{background:linear-gradient(180deg,#f8fbfe 0%,#eef6fb 100%)}main.container{p
     grid-column:auto;
   }
 }
+/* ===== HEADER CON LOGO ===== */
+
+.site-header {
+  text-align: center;
+  padding: 20px 10px;
+}
+
+.logo {
+  max-width: 260px;
+  height: auto;
+  margin-bottom: 10px;
+}
+
+/* TITULO */
+
+.site-header h1 {
+  color: #27398b;
+  font-weight: 700;
+  margin-top: 5px;
+}
+

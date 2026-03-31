@@ -196,3 +196,38 @@ main.container > .grid > section > p {
   line-height: 1.55;
   max-width: 980px;
 }
+/* ===== INPUTS PROFESIONALES ===== */
+
+input,
+select,
+textarea {
+  background: #0f1a24;
+  color: white;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  padding: 14px;
+  font-size: 1rem;
+  transition: all .2s ease;
+}
+
+/* Placeholder claro */
+input::placeholder,
+textarea::placeholder {
+  color: #9fb2c7;
+}
+
+/* Hover */
+input:hover,
+select:hover,
+textarea:hover {
+  border-color: #3a7ec1;
+}
+
+/* Focus */
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: #3a7ec1;
+  box-shadow: 0 0 0 3px rgba(58,126,193,.18);
+  outline: none;
+}

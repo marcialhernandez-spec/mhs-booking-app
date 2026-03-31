@@ -175,3 +175,24 @@ body {
 main.container {
   margin-top: 20px;
 }
+/* ===== AJUSTE VISUAL SUPERIOR ===== */
+
+hgroup h2 {
+  color: #21374d;
+  font-size: 2.1rem;
+  margin-bottom: 6px;
+}
+
+hgroup h3 {
+  color: #6f8091;
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+
+main.container > .grid > section > p {
+  color: #44586b;
+  font-size: 1.08rem;
+  line-height: 1.55;
+  max-width: 980px;
+}

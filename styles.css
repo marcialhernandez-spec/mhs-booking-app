@@ -231,3 +231,28 @@ textarea:focus {
   box-shadow: 0 0 0 3px rgba(58,126,193,.18);
   outline: none;
 }
+/* ===== BOTONES DE HORARIOS ===== */
+
+#availability button {
+  background: white;
+  border: 2px solid #b9d9c6;
+  color: #1e6b4c;
+  font-weight: 700;
+  border-radius: 14px;
+  padding: 14px 18px;
+  font-size: 1.1rem;
+  transition: all .2s ease;
+}
+
+/* Hover */
+#availability button:hover {
+  background: #e6f5ec;
+  border-color: #2fa36b;
+  transform: translateY(-2px);
+}
+
+/* Seleccionado */
+#availability button.selected {
+  background: linear-gradient(90deg,#2fa36b,#1e6b4c);
+  color: white;
+  border-color: #1e6b4c;
